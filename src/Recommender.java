@@ -1,6 +1,11 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Recommender {
     public static void main(String[] args) throws Exception {
         System.out.println("Running Recommender...");
+        createMovieList();
     }
 
     /**
@@ -10,9 +15,30 @@ public class Recommender {
      * Read info from movies.txt to make a movie object to be stored in an array. 
      * @return an array of movie objects.
      */
-    public Movie[] createMovieList(){
-        Movie[] movieArr;
-        return movieArr;
+    public static Movie[] createMovieList(){
+        
+        int movieNum = 5;
+        int movieGenres = 9;
+        Movie[] movieArr = new Movie[movieNum];
+        String[][] allMovies = new String[movieNum][movieGenres];
+        File movies = new File("./lib/movies.txt");
+        try {
+            Scanner readGenres = new Scanner(movies);
+            for(int i = 0; i < movieNum; i++){
+                for(int j = 0; j < movieGenres; j++){
+                   allMovies[i][j] =  readGenres.nextLine();
+                   System.out.println(allMovies[i][j]);
+                }
+                Movie nextMovie = new Movie(allMovies[i]);
+                movieArr[i] = nextMovie;
+
+            }
+        } catch (FileNotFoundException e) {
+           System.out.print("Error with movies file");
+            e.printStackTrace();
+        }
+        
+        return null;
     }
 
 
@@ -25,6 +51,6 @@ public class Recommender {
      */
     public User[] createUserList(){
         User[][] userArr;
-        return userArr;
+        return null;
     }
 }

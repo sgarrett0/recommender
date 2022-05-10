@@ -1,0 +1,45 @@
+Jurassic Park
+6
+2
+0
+0
+3
+4
+9
+0
+Harry Potter
+8
+2
+0
+4
+6
+1
+0
+0
+Jaws
+7
+1
+0
+0
+2
+7
+1
+0
+Avengers
+9
+4
+0
+0
+3
+0
+8
+0
+The Mighty Ducks
+8
+5
+0
+0
+0
+0
+0
+0

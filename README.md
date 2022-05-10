@@ -18,7 +18,17 @@ variables, constructors, and accessors/mutators of the User and Movie Class.
 
 
 EXPLAINING THE CONTENTS OF THE MOVIE.TXT FILE:
+A movie will consist of: 9 Lines of Code
 
+Title
+Action
+Comedy
+Drama
+Romance
+Mystery
+Horror
+Sci-Fi
+Documentary
 
 EXPLAINING THE CONTENTS OF THE USER.TXT FILE:
 
