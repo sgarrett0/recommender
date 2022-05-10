@@ -1,6 +1,6 @@
 public class MovieGenerator {
     public static void main(String[] args) {
-        System.out.println(generate(100));
+        
     }
 
     public static Movie[] generate(int n) {
