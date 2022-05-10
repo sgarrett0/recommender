@@ -1,6 +1,21 @@
 public class Recommender {
     public static void main(String[] args) throws Exception {
-        System.out.println("Running Recommender...");
+        System.out.println("Running Recommender...\nReading Files...");
+        Movie[][] movieScores = createMovieList();
+        User[][] userScores = createUserList();
+        System.out.println("Arrays Created...\nGenerating Recommendation List...");
+        runFactorization(movieScores, userScores);
+        createRecommendations();
+    }
+
+    /**
+     * Create dot product of user and movie genre ratings
+     */
+    private static void runFactorization(Movie[][] movieScores, User[][] userScores) {
+    }
+
+
+    private static void createRecommendations() {
     }
 
     /**
@@ -10,9 +25,9 @@ public class Recommender {
      * Read info from movies.txt to make a movie object to be stored in an array. 
      * @return an array of movie objects.
      */
-    public Movie[] createMovieList(){
-        Movie[] movieArr;
-        return movieArr;
+    private static Movie[][] createMovieList(){
+        Movie[][] movieArr;
+        return null;
     }
 
 
@@ -23,8 +38,10 @@ public class Recommender {
      * Read info from users.txt file to create N user objects. 
      * @return an array of user objects.
      */
-    public User[] createUserList(){
+    private static User[][] createUserList(){
         User[][] userArr;
-        return userArr;
+        return null;
     }
+
+
 }
