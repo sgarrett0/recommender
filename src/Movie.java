@@ -8,6 +8,7 @@ public class Movie {
     private int horrorScore;
     private int sciFiScore;
     private int docScore;
+    private int hash = 1;
     
     public Movie(String name, int action, int comedy, int drama, int romance, int mystery, int horror, int sciFi, int documetary){
         this.title = name;
@@ -53,6 +54,14 @@ public class Movie {
    }
    public int getDocScore(){
        return docScore;
+   }
+
+   public int getHash(){
+       return this.hash;
+   }
+
+   public void setHash(int finalDigit){
+       this.hash *= 10 + finalDigit;
    }
 }
 
