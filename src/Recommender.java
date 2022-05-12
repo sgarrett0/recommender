@@ -53,4 +53,8 @@ public class Recommender {
         User[][] userArr;
         return null;
     }
+
+    public static void dotProduct(){
+        //add the usersmovie array times the cooresponding movierating array index
+    }
 }
