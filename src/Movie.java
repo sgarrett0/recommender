@@ -61,7 +61,7 @@ public class Movie {
    }
 
    public void setHash(int finalDigit){
-       this.hash *= 10 + finalDigit;
+       this.hash = this.hash * 10 + finalDigit;
    }
 }
 

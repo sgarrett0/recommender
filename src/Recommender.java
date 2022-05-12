@@ -1,14 +1,33 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Recommender {
+    private static HashMap<Integer, ArrayList<Movie>> buckets = new HashMap<Integer, ArrayList<Movie>>();
     public static void main(String[] args) throws Exception {
         System.out.println("Running Recommender...\nReading Files...");
-
+        //store generated info for perpetual use
         Movie[] movieScores = MovieGenerator.generate(20);
         User[] userScores = UserGenerator.generate(20);
         System.out.println("Arrays Created...\nGenerating Recommendation List...");
         //runFactorization(movieScores, userScores);
         lsHashing(movieScores, userScores);
-        
-        createRecommendations();
+        System.out.println(buckets.values());
+        //createRecommendations();
+    }
+
+    /**
+     * Use lsh created hashes to organize movies based on similarity
+     */
+    private static void createBuckets(Movie movie) {
+        //64 potential buckets 8 genres * OPTION 1 or 0
+        if (buckets.containsKey(movie.getHash())){
+            buckets.get(movie.getHash()).add(movie);
+        }
+        else{
+            ArrayList<Movie> temp = new ArrayList<Movie>();
+            temp.add(movie);
+            buckets.put(movie.getHash(), temp);
+        }
     }
 
     /**
@@ -17,9 +36,9 @@ public class Recommender {
      * @param userScores
      */
     private static void lsHashing(Movie[] movieScores, User[] userScores) {
-        int[] pivots = {10, 20, 40, 50, 70, 80, 90};
-        for (int i = 0; i < pivots.length; i++){
-            for (Movie movie : movieScores) {
+        int[] pivots = {10, 20, 40, 50, 60, 70, 80, 90};
+        for (Movie movie : movieScores) {
+            for (int i = 0; i < pivots.length; i++){
                 switch (i){
                     case 0:
                         if (movie.getActionScore() >= pivots[i]){
@@ -79,6 +98,8 @@ public class Recommender {
                         break;
                 }
             }
+            //create buckets
+            createBuckets(movie);
         }
     }
 
