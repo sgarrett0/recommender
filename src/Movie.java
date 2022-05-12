@@ -21,6 +21,11 @@ public class Movie {
         this.docScore = documetary;
     }
 
+    @Override
+    public String toString() {
+        return "Movie{" + "title=" + title + "; hash=" + hash + '}';
+    }
+
    public String getTitle(){
        return this.title;
    }
