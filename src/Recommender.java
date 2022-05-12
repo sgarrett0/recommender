@@ -19,17 +19,65 @@ public class Recommender {
     private static void lsHashing(Movie[] movieScores, User[] userScores) {
         int[] pivots = {10, 20, 40, 50, 70, 80, 90};
         for (int i = 0; i < pivots.length; i++){
-            switch (i){
-                case 0:
-                    
-                case 1:
-
-                case 2:  
-                case 3: 
-                case 4: 
-                case 5: 
-                case 6: 
-                case 7: 
+            for (Movie movie : movieScores) {
+                switch (i){
+                    case 0:
+                        if (movie.getActionScore() >= pivots[i]){
+                            movie.setHash(1);
+                        } else {
+                            movie.setHash(0);
+                        }
+                        break;
+                    case 1:
+                        if (movie.getComedyScore() >= pivots[i]){
+                            movie.setHash(1);
+                        } else {
+                            movie.setHash(0);
+                        }
+                        break;
+                    case 2:
+                        if (movie.getDramaScore() >= pivots[i]){
+                            movie.setHash(1);
+                        } else {
+                            movie.setHash(0);
+                        }
+                        break;
+                    case 3:
+                        if (movie.getRomanceScore() >= pivots[i]){
+                            movie.setHash(1);
+                        } else {
+                            movie.setHash(0);
+                        }
+                        break;
+                    case 4:
+                        if (movie.getMysteryScore() >= pivots[i]){
+                            movie.setHash(1);
+                        } else {
+                            movie.setHash(0);
+                        }
+                        break;
+                    case 5:
+                        if (movie.getHorrorScore() >= pivots[i]){
+                            movie.setHash(1);
+                        } else {
+                            movie.setHash(0);
+                        }
+                        break;
+                    case 6:
+                        if (movie.getSciFiScore() >= pivots[i]){
+                            movie.setHash(1);
+                        } else {
+                            movie.setHash(0);
+                        }
+                        break;
+                    case 7:
+                        if (movie.getDocScore() >= pivots[i]){
+                            movie.setHash(1);
+                        } else {
+                            movie.setHash(0);
+                        }
+                        break;
+                }
             }
         }
     }
