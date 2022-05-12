@@ -39,7 +39,7 @@ public class Recommender {
             e.printStackTrace();
         }
         
-        return null;
+        return movieArr;
     }
 
 
@@ -65,13 +65,13 @@ public class Recommender {
                     System.out.println(allUsers[x][y]);
                 }
                 User nextUser = new User(allUsers[x]);
-                allUsers[x] = nextUser;
+                userArr[x] = nextUser;
             }
         
         } catch (FileNotFoundException e) {
            System.out.print("Error with users file");
             e.printStackTrace();
         }
-        return null;
+        return userArr;
     }
 }
