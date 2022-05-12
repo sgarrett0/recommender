@@ -6,6 +6,7 @@ public class Recommender {
     public static void main(String[] args) throws Exception {
         System.out.println("Running Recommender...");
         createMovieList();
+        createUserList();
     }
 
     /**
@@ -49,8 +50,28 @@ public class Recommender {
      * Read info from users.txt file to create N user objects. 
      * @return an array of user objects.
      */
-    public User[] createUserList(){
-        User[][] userArr;
+    public static User[] createUserList(){
+        
+        int userNum = 5;
+        int userRatings = 9;
+        User[] userArr = new User[userNum];
+        String[][] allUsers = new String[userNum][userRatings];
+        File users = new File("./lib/users.txt");
+        try {
+            Scanner readRatings = new Scanner(users);
+            for(int x = 0; x < userNum; x++){
+                for(int y = 0; y < userRatings; y++){
+                allUsers[x][y] = readRatings.nextLine();
+                    System.out.println(allUsers[x][y]);
+                }
+                User nextUser = new User(allUsers[x]);
+                allUsers[x] = nextUser;
+            }
+        
+        } catch (FileNotFoundException e) {
+           System.out.print("Error with users file");
+            e.printStackTrace();
+        }
         return null;
     }
 }
