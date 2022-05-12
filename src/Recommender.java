@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Recommender {
@@ -24,9 +25,7 @@ public class Recommender {
             buckets.get(movie.getHash()).add(movie);
         }
         else{
-            ArrayList<Movie> temp = new ArrayList<Movie>();
-            temp.add(movie);
-            buckets.put(movie.getHash(), temp);
+            buckets.put(movie.getHash(), new ArrayList<Movie>(Arrays.asList(movie)));
         }
     }
 
