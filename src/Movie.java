@@ -9,18 +9,19 @@ public class Movie {
     private int sciFiScore;
     private int docScore;
     
-    public Movie(String name, int action, int comedy, int drama, int romance, int mystery, int horror, int sciFi, int documetary){
-        this.title = name;
-        this.actionScore = action;
-        this.comedyScore = comedy;
-        this.dramaScore = drama;
-        this.romanceScore = romance;
-        this.horrorScore = horror;
-        this.sciFiScore = sciFi;
-        this.docScore = documetary;
+    public Movie(String[] info){
+        this.title = info[0];
+        this.actionScore = Integer.parseInt(info[1]);
+        this.comedyScore = Integer.parseInt(info[2]);
+        this.dramaScore = Integer.parseInt(info[3]);
+        this.romanceScore = Integer.parseInt(info[4]);
+        this.mysteryScore = Integer.parseInt(info[5]);
+        this.horrorScore = Integer.parseInt(info[6]);
+        this.sciFiScore = Integer.parseInt(info[7]);
+        this.docScore = Integer.parseInt(info[8]);
     }
 
-   public String getTitle(){
+public String getTitle(){
        return this.title;
    }
 
