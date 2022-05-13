@@ -3,7 +3,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Recommender {
-    private static HashMap<Integer, ArrayList<Movie>> buckets = new HashMap<Integer, ArrayList<Movie>>();
+    private static HashMap<Integer, ArrayList<Movie>> movieBuckets = new HashMap<Integer, ArrayList<Movie>>();
+    private static HashMap<Integer, ArrayList<User>> userBuckets = new HashMap<Integer, ArrayList<User>>();
     public static void main(String[] args) throws Exception {
         System.out.println("Running Recommender...\nReading Files...");
         //store generated info for perpetual use
@@ -12,20 +13,31 @@ public class Recommender {
         System.out.println("Arrays Created...\nGenerating Recommendation List...");
         //runFactorization(movieScores, userScores);
         lsHashing(movieScores, userScores);
-        System.out.println(buckets.values());
+        // System.out.println(movieBuckets.values());
+        System.out.println(userBuckets.values());
         //createRecommendations();
     }
 
     /**
      * Use lsh created hashes to organize movies based on similarity
      */
-    private static void createBuckets(Movie movie) {
+    private static void createMovieBuckets(Movie movie) {
         //64 potential buckets 8 genres * OPTION 1 or 0
-        if (buckets.containsKey(movie.getHash())){
-            buckets.get(movie.getHash()).add(movie);
+        if (movieBuckets.containsKey(movie.getHash())){
+            movieBuckets.get(movie.getHash()).add(movie);
         }
         else{
-            buckets.put(movie.getHash(), new ArrayList<Movie>(Arrays.asList(movie)));
+            movieBuckets.put(movie.getHash(), new ArrayList<Movie>(Arrays.asList(movie)));
+        }
+    }
+
+    private static void createUserBuckets(User user) {
+        //64 potential buckets 8 genres * OPTION 1 or 0
+        if (userBuckets.containsKey(user.getHash())){
+            userBuckets.get(user.getHash()).add(user);
+        }
+        else{
+            userBuckets.put(user.getHash(), new ArrayList<User>(Arrays.asList(user)));
         }
     }
 
@@ -36,69 +48,120 @@ public class Recommender {
      */
     private static void lsHashing(Movie[] movieScores, User[] userScores) {
         int[] pivots = {10, 20, 40, 50, 60, 70, 80, 90};
-        for (Movie movie : movieScores) {
-            for (int i = 0; i < pivots.length; i++){
-                switch (i){
+        for (int i=0; i<movieScores.length; i++) {
+            Movie movie = movieScores[i];
+            User user = userScores[i];
+            for (int j = 0; j < pivots.length; j++){
+                switch (j){
                     case 0:
-                        if (movie.getActionScore() >= pivots[i]){
+                        if (movie.getActionScore() >= pivots[j]){
                             movie.setHash(1);
                         } else {
                             movie.setHash(0);
+                        }
+
+                        if (user.getActionScore() >= pivots[j]){
+                            user.setHash(1);
+                        } else {
+                            user.setHash(0);
                         }
                         break;
                     case 1:
-                        if (movie.getComedyScore() >= pivots[i]){
+                        if (movie.getComedyScore() >= pivots[j]){
                             movie.setHash(1);
                         } else {
                             movie.setHash(0);
+                        }
+
+                        if (user.getComedyScore() >= pivots[j]){
+                            user.setHash(1);
+                        } else {
+                            user.setHash(0);
                         }
                         break;
                     case 2:
-                        if (movie.getDramaScore() >= pivots[i]){
+                        if (movie.getDramaScore() >= pivots[j]){
                             movie.setHash(1);
                         } else {
                             movie.setHash(0);
+                        }
+
+                        if (user.getDramaScore() >= pivots[j]){
+                            user.setHash(1);
+                        } else {
+                            user.setHash(0);
                         }
                         break;
                     case 3:
-                        if (movie.getRomanceScore() >= pivots[i]){
+                        if (movie.getRomanceScore() >= pivots[j]){
                             movie.setHash(1);
                         } else {
                             movie.setHash(0);
+                        }
+
+                        if (user.getRomanceScore() >= pivots[j]){
+                            user.setHash(1);
+                        } else {
+                            user.setHash(0);
                         }
                         break;
                     case 4:
-                        if (movie.getMysteryScore() >= pivots[i]){
+                        if (movie.getMysteryScore() >= pivots[j]){
                             movie.setHash(1);
                         } else {
                             movie.setHash(0);
+                        }
+
+                        if (user.getMysteryScore() >= pivots[j]){
+                            user.setHash(1);
+                        } else {
+                            user.setHash(0);
                         }
                         break;
                     case 5:
-                        if (movie.getHorrorScore() >= pivots[i]){
+                        if (movie.getHorrorScore() >= pivots[j]){
                             movie.setHash(1);
                         } else {
                             movie.setHash(0);
+                        }
+
+                        if (user.getHorrorScore() >= pivots[j]){
+                            user.setHash(1);
+                        } else {
+                            user.setHash(0);
                         }
                         break;
                     case 6:
-                        if (movie.getSciFiScore() >= pivots[i]){
+                        if (movie.getSciFiScore() >= pivots[j]){
                             movie.setHash(1);
                         } else {
                             movie.setHash(0);
                         }
+
+                        if (user.getSciFiScore() >= pivots[j]){
+                            user.setHash(1);
+                        } else {
+                            user.setHash(0);
+                        }
                         break;
                     case 7:
-                        if (movie.getDocScore() >= pivots[i]){
+                        if (movie.getDocScore() >= pivots[j]){
                             movie.setHash(1);
                         } else {
                             movie.setHash(0);
+                        }
+
+                        if (user.getDocScore() >= pivots[j]){
+                            user.setHash(1);
+                        } else {
+                            user.setHash(0);
                         }
                         break;
                 }
             }
             //create buckets
-            createBuckets(movie);
+            createMovieBuckets(movie);
+            createUserBuckets(user);
         }
     }
 
