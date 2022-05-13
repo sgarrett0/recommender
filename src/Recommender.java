@@ -76,6 +76,13 @@ public class Recommender {
     }
 
     public static void dotProduct(){
-        //add the usersmovie array times the cooresponding movierating array index
+        //takes userArr and movieArr, does
+        for (int row = 0; row < userArr.length; row++){
+            for (int col = 0; col < movieArr.length; col++){
+                for (int k = 1; k < movieArr[j].length; k++){
+                    Rating[j][k] = userArr[i][k] * movieArr[j][k];
+                }
+            }
+        }
     }
 }
