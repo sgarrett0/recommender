@@ -5,8 +5,11 @@ import java.util.Scanner;
 public class Recommender {
     public static void main(String[] args) throws Exception {
         System.out.println("Running Recommender...");
-        createMovieList();
-        createUserList();
+        Movie[] movieArr = createMovieList();
+        User[] userArr = createUserList();
+
+        System.out.println("Running dotProduct");
+        dotProduct(movieArr, userArr);
     }
 
     /**
@@ -75,13 +78,12 @@ public class Recommender {
         return userArr;
     }
 
-    public static void dotProduct(){
+    public static void dotProduct(Movie[] m, User[] u){
         //takes userArr and movieArr, does
-        for (int row = 0; row < userArr.length; row++){
-            for (int col = 0; col < movieArr.length; col++){
-                for (int k = 1; k < movieArr[j].length; k++){
-                    Rating[j][k] = userArr[i][k] * movieArr[j][k];
-                }
+        for (int i = 0; i < u.length; i++){
+            for (int j = 0; j < m.length; j++){
+                int movieScore = u[i].getActionScore() * m[j].getActionScore() + u[i].getComedyScore() * m[j].getComedyScore() + u[i].getDramaScore() * m[j].getDramaScore() + u[i].getRomanceScore() * m[j].getRomanceScore() + u[i].getMysteryScore() * m[j].getMysteryScore() + u[i].getHorrorScore() * m[j].getHorrorScore() + u[i].getSciFiScore() * m[j].getSciFiScore() + u[i].getDocScore() * m[j].getDocScore();
+                System.out.println(u[i].getName() + "'s score for " + m[j].getTitle() + " is " + movieScore);
             }
         }
     }
