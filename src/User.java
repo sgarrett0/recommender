@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class User {
 private String name;
 private int userActionScore;
@@ -8,6 +10,8 @@ private int userMysteryScore;
 private int userHorrorScore;
 private int userSciFiScore;
 private int userDocScore;
+private ArrayList<Rating> RatingList = new ArrayList<Rating>(); 
+
 
     public User(String[] info){
         this.name = info[0];
@@ -53,6 +57,14 @@ private int userDocScore;
     }
     public int getDocScore(){
         return userDocScore;
+    }
+
+    public ArrayList<Rating> getRatingArray(){
+        return RatingList;
+    }
+
+    public void setRatingArray(Rating rating ){
+        this.RatingList.add(rating);  
     }
     
 }
