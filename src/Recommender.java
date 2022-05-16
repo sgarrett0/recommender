@@ -56,14 +56,14 @@ public class Recommender {
     public static User[] createUserList(){
         
         int userNum = 5;
-        int userRatings = 9;
+        int userGenreRatings = 9;
         User[] userArr = new User[userNum];
-        String[][] allUsers = new String[userNum][userRatings];
+        String[][] allUsers = new String[userNum][userGenreRatings];
         File users = new File("./lib/users.txt");
         try {
             Scanner readRatings = new Scanner(users);
             for(int x = 0; x < userNum; x++){
-                for(int y = 0; y < userRatings; y++){
+                for(int y = 0; y < userGenreRatings; y++){
                 allUsers[x][y] = readRatings.nextLine();
                     System.out.println(allUsers[x][y]);
                 }
@@ -87,5 +87,27 @@ public class Recommender {
                 System.out.println(u[i].getName() + "'s score for " + m[j].getTitle() + " is " + movieScore);
             }
         }
+    }
+    public static Rating[] createRatingList(){
+        int userNum = 5;
+        int userRatings = 15;
+        Rating[] ratingArr = new Rating[userNum];
+        String[][] allRatings = new String[userNum][userRatings];
+        File ratings = new File("./lib/userRatings.txt");
+        try {
+            Scanner readScores = new Scanner(ratings);
+            for(int a = 0; a < userNum; a++){
+                for(int b = 0; b < userRatings; b++){
+                    allRatings[a][b] = readScores.nextLine();
+                    System.out.println(allRatings[a][b]);
+                }
+                Rating nextRating = new Rating(allRatings[a]);
+                ratingArr[a] = nextRating;
+            }
+        } catch (FileNotFoundException e) {
+            System.out.print("Error with ratings file");
+            e.printStackTrace();
+        }
+        return ratingArr;
     }
 }
