@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Recommender {
     private static HashMap<Integer, ArrayList<Movie>> movieBuckets = new HashMap<Integer, ArrayList<Movie>>();
@@ -13,8 +14,9 @@ public class Recommender {
         System.out.println("Arrays Created...\nGenerating Recommendation List...");
         //runFactorization(movieScores, userScores);
         lsHashing(movieScores, userScores);
-        // System.out.println(movieBuckets.values());
         System.out.println(userBuckets.values());
+        System.out.println(movieBuckets.values());
+        createRecommendations();
         //createRecommendations();
     }
 
@@ -172,8 +174,12 @@ public class Recommender {
 
     }
 
+    //for Factorization and LSH
+    private static void createRecommendations(HashMap<Integer, ArrayList<User>> users, HashMap<Integer, ArrayList<Movie>> movieBuckets){
+        Set<Integer> userKeys = users.keySet();
+        for (int i =0; i < userKeys.size(); i++ ){
 
-    private static void createRecommendations() {
+        }
     }
 
     /**
