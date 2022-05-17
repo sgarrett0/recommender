@@ -21,6 +21,18 @@ public class Movie {
         this.docScore = documetary;
     }
 
+    public Movie(String name) {
+        this.title = name;
+        this.actionScore = 50;
+        this.comedyScore = 50;
+        this.dramaScore = 50;
+        this.romanceScore = 50;
+        this.mysteryScore = 50;
+        this.horrorScore = 50;
+        this.sciFiScore = 50;
+        this.docScore = 50;
+    }
+
     @Override
     public String toString() {
         return "Movie{" + "title=" + title + "; hash=" + hash + '}';

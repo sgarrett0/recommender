@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 public class Recommender {
@@ -9,14 +10,19 @@ public class Recommender {
     public static void main(String[] args) throws Exception {
         System.out.println("Running Recommender...\nReading Files...");
         //store generated info for perpetual use
-        Movie[] movieScores = MovieGenerator.generate(20);
-        User[] userScores = UserGenerator.generate(20);
+        Movie[] movieScores = MovieGenerator.generate(200);
+        User[] userScores = UserGenerator.generate(200);
         System.out.println("Arrays Created...\nGenerating Recommendation List...");
         //runFactorization(movieScores, userScores);
         lsHashing(movieScores, userScores);
-        System.out.println(userBuckets.values());
-        System.out.println(movieBuckets.values());
-        createRecommendations();
+        // System.out.println(userBuckets.values());
+        // System.out.println(movieBuckets.values());
+        createRecommendations(userBuckets, movieBuckets);
+        for(User user : userScores) {
+            System.out.print(user.getName() + ": ");
+            user.printRecommended();
+            System.out.println("");
+        }
         //createRecommendations();
     }
 
@@ -175,10 +181,18 @@ public class Recommender {
     }
 
     //for Factorization and LSH
-    private static void createRecommendations(HashMap<Integer, ArrayList<User>> users, HashMap<Integer, ArrayList<Movie>> movieBuckets){
-        Set<Integer> userKeys = users.keySet();
-        for (int i =0; i < userKeys.size(); i++ ){
-
+    private static void createRecommendations(HashMap<Integer, ArrayList<User>> users, HashMap<Integer, ArrayList<Movie>> movies){
+        List<Integer> movieKeys = new ArrayList<Integer>(movies.keySet());
+        for (int i = 0; i < movieKeys.size(); i++ ) {
+            if (users.containsKey(movieKeys.get(i))) {
+                ArrayList<User> userList = users.get(movieKeys.get(i));
+                System.out.println(userList.size() + " UL");
+                for (int j=0; j<userList.size(); j++) {
+                    System.out.println(j+" J");
+                    User user = userList.get(j);
+                    user.addToRecommended(movies.get(movieKeys.get(i)));
+                }
+            }
         }
     }
 
