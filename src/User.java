@@ -38,6 +38,8 @@ public class User {
         this.horrorScore = Integer.parseInt(info[6]);
         this.sciFiScore = Integer.parseInt(info[7]);
         this.docScore = Integer.parseInt(info[8]);
+        this.recommended = new ArrayList<Movie>();
+        this.watchHistory = generateWatchHistory();
     }
 
     public static ArrayList<Movie> generateWatchHistory() {
