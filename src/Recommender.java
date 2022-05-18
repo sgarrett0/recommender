@@ -7,9 +7,10 @@ public class Recommender {
         System.out.println("Running Recommender...");
         Movie[] movieArr = createMovieList();
         User[] userArr = createUserList();
+        Rating[] watchedRatings = createRatingList();
 
-        System.out.println("Running dotProduct");
-        dotProduct(movieArr, userArr);
+        userArr = dotProduct(movieArr, userArr);
+        //recommendMovies(watchedRatings, userArr, movieArr);
     }
 
     /**
@@ -21,7 +22,7 @@ public class Recommender {
      */
     public static Movie[] createMovieList(){
         
-        int movieNum = 5;
+        int movieNum = 10;
         int movieGenres = 9;
         Movie[] movieArr = new Movie[movieNum];
         String[][] allMovies = new String[movieNum][movieGenres];
@@ -31,7 +32,7 @@ public class Recommender {
             for(int i = 0; i < movieNum; i++){
                 for(int j = 0; j < movieGenres; j++){
                    allMovies[i][j] =  readGenres.nextLine();
-                   System.out.println(allMovies[i][j]);
+                   //System.out.println(allMovies[i][j]);
                 }
                 Movie nextMovie = new Movie(allMovies[i]);
                 movieArr[i] = nextMovie;
@@ -55,7 +56,7 @@ public class Recommender {
      */
     public static User[] createUserList(){
         
-        int userNum = 5;
+        int userNum = 10;
         int userGenreRatings = 9;
         User[] userArr = new User[userNum];
         String[][] allUsers = new String[userNum][userGenreRatings];
@@ -65,7 +66,7 @@ public class Recommender {
             for(int x = 0; x < userNum; x++){
                 for(int y = 0; y < userGenreRatings; y++){
                 allUsers[x][y] = readRatings.nextLine();
-                    System.out.println(allUsers[x][y]);
+                    //System.out.println(allUsers[x][y]);
                 }
                 User nextUser = new User(allUsers[x]);
                 userArr[x] = nextUser;
@@ -78,19 +79,22 @@ public class Recommender {
         return userArr;
     }
 
-    public static void dotProduct(Movie[] m, User[] u){
-        //takes userArr and movieArr, does
+    public static User[] dotProduct(Movie[] m, User[] u){
         for (int i = 0; i < u.length; i++){
             for (int j = 0; j < m.length; j++){
                 double movieScore = u[i].getActionScore() * m[j].getActionScore() + u[i].getComedyScore() * m[j].getComedyScore() + u[i].getDramaScore() * m[j].getDramaScore() + u[i].getRomanceScore() * m[j].getRomanceScore() + u[i].getMysteryScore() * m[j].getMysteryScore() + u[i].getHorrorScore() * m[j].getHorrorScore() + u[i].getSciFiScore() * m[j].getSciFiScore() + u[i].getDocScore() * m[j].getDocScore();
                 movieScore /= 10;
-                System.out.println(u[i].getName() + "'s score for " + m[j].getTitle() + " is " + movieScore);
+                Rating r = new Rating(m[j].getTitle(), movieScore);
+                u[i].setRatingArray(r);
+                //System.out.println(u[i].getName() + "'s score for " + m[j].getTitle() + " is " + movieScore);
             }
+            System.out.println(u[i].getRatingArray());
         }
+        return u;
     }
     public static Rating[] createRatingList(){
-        int userNum = 5;
-        int userRatings = 15;
+        int userNum = 10;
+        int userRatings = 5; //was 15
         Rating[] ratingArr = new Rating[userNum];
         String[][] allRatings = new String[userNum][userRatings];
         File ratings = new File("./lib/userRatings.txt");
@@ -99,7 +103,7 @@ public class Recommender {
             for(int a = 0; a < userNum; a++){
                 for(int b = 0; b < userRatings; b++){
                     allRatings[a][b] = readScores.nextLine();
-                    System.out.println(allRatings[a][b]);
+                    //System.out.println(allRatings[a][b]);
                 }
                 Rating nextRating = new Rating(allRatings[a]);
                 ratingArr[a] = nextRating;
@@ -109,5 +113,19 @@ public class Recommender {
             e.printStackTrace();
         }
         return ratingArr;
+    }
+    // if the user hasn't seen the movie and it's above the rating threshold 
+    //output: prints each user as follows: "UserName's recommended movies are " + the top three movies
+    public static void recommendMovies(Rating[] wM, User[] u, Movie[] m){
+        double ratingThreshold = 8;
+        for (User currentUser : u){
+            String movies = "";
+            for (int i = 0; i < currentUser.getRatingArray().size(); i++){
+                if(currentUser.getRatingArray().get(i).getScore() < ratingThreshold){
+                    movies += currentUser.getRatingArray().get(i).getTitle();
+                }
+            }
+            System.out.println(currentUser.getName() + "'s recommended movies are " + movies);
+        }
     }
 }
