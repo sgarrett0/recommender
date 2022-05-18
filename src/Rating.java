@@ -1,4 +1,4 @@
-public class Rating{
+public class Rating {
     private String title;
     private int score;
 
@@ -6,11 +6,11 @@ public class Rating{
         this.title = title;
         this.score = score;
     }
-
-    public String getMovie(){
+    public Rating(String[] strings) {
+    }
+    public String getTitle(){
         return this.title;
     }
-
     public int getScore(){
         return score;
     }

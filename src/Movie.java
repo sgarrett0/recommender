@@ -33,6 +33,18 @@ public class Movie {
         this.docScore = 50;
     }
 
+    public Movie(String[] info){
+        this.title = info[0];
+        this.actionScore = Integer.parseInt(info[1]);
+        this.comedyScore = Integer.parseInt(info[2]);
+        this.dramaScore = Integer.parseInt(info[3]);
+        this.romanceScore = Integer.parseInt(info[4]);
+        this.mysteryScore = Integer.parseInt(info[5]);
+        this.horrorScore = Integer.parseInt(info[6]);
+        this.sciFiScore = Integer.parseInt(info[7]);
+        this.docScore = Integer.parseInt(info[8]);
+    }
+
     @Override
     public String toString() {
         return "Movie{" + "title=" + title + "; hash=" + hash + '}';
@@ -41,6 +53,9 @@ public class Movie {
    public String getTitle(){
        return this.title;
    }
+
+    
+
 
    public int getActionScore(){
        return actionScore;

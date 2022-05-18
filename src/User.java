@@ -13,6 +13,7 @@ public class User {
     private int hash = 1;
     private ArrayList<Movie> recommended;
     private ArrayList<Movie> watchHistory;
+    private ArrayList<Rating> RatingList = new ArrayList<Rating>(); 
 
     public User(String name, int actionScore, int comedyScore, int dramaScore, int romanceScore, int mysteryScore, int horrorScore, int sciFiScore, int docScore){
         this.name = name;
@@ -26,6 +27,17 @@ public class User {
         this.docScore = docScore;
         this.recommended = new ArrayList<Movie>();
         this.watchHistory = generateWatchHistory();
+    }
+    public User(String[] info){
+        this.name = info[0];
+        this.actionScore = Integer.parseInt(info[1]);
+        this.comedyScore = Integer.parseInt(info[2]);
+        this.dramaScore = Integer.parseInt(info[3]);
+        this.romanceScore = Integer.parseInt(info[4]);
+        this.mysteryScore = Integer.parseInt(info[5]);
+        this.horrorScore = Integer.parseInt(info[6]);
+        this.sciFiScore = Integer.parseInt(info[7]);
+        this.docScore = Integer.parseInt(info[8]);
     }
 
     public static ArrayList<Movie> generateWatchHistory() {
@@ -89,18 +101,6 @@ public class User {
         return mysteryScore;
     }
 
-    public int getHorrorScore() {
-        return horrorScore;
-    }
-
-    public int getSciFiScore() {
-        return sciFiScore;
-    }
-
-    public int getDocScore() {
-        return docScore;
-    }
-
     public int getHash() {
         return hash;
     }
@@ -109,6 +109,24 @@ public class User {
         this.hash = this.hash * 10 + finalDigit;
     }
     
+    public int getHorrorScore(){
+        return horrorScore;
+    }
+ 
+    public int getSciFiScore(){
+        return sciFiScore;
+    }
+    public int getDocScore(){
+        return docScore;
+    }
+
+    public ArrayList<Rating> getRatingArray(){
+        return RatingList;
+    }
+
+    public void setRatingArray(Rating rating ){
+        this.RatingList.add(rating);  
+    }
     
     
 }

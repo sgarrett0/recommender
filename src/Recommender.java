@@ -3,6 +3,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Recommender {
     private static HashMap<Integer, ArrayList<Movie>> movieBuckets = new HashMap<Integer, ArrayList<Movie>>();
@@ -203,9 +206,30 @@ public class Recommender {
      * Read info from movies.txt to make a movie object to be stored in an array. 
      * @return an array of movie objects.
      */
-    private static Movie[][] createMovieList(){
-        Movie[][] movieArr;
-        return null;
+    public static Movie[] createMovieList(){
+        
+        int movieNum = 5;
+        int movieGenres = 9;
+        Movie[] movieArr = new Movie[movieNum];
+        String[][] allMovies = new String[movieNum][movieGenres];
+        File movies = new File("./lib/movies.txt");
+        try {
+            Scanner readGenres = new Scanner(movies);
+            for(int i = 0; i < movieNum; i++){
+                for(int j = 0; j < movieGenres; j++){
+                   allMovies[i][j] =  readGenres.nextLine();
+                   System.out.println(allMovies[i][j]);
+                }
+                Movie nextMovie = new Movie(allMovies[i]);
+                movieArr[i] = nextMovie;
+
+            }
+        } catch (FileNotFoundException e) {
+           System.out.print("Error with movies file");
+            e.printStackTrace();
+        }
+        
+        return movieArr;
     }
 
 
@@ -216,10 +240,61 @@ public class Recommender {
      * Read info from users.txt file to create N user objects. 
      * @return an array of user objects.
      */
-    private static User[][] createUserList(){
-        User[][] userArr;
-        return null;
+    public static User[] createUserList(){
+        
+        int userNum = 5;
+        int userGenreRatings = 9;
+        User[] userArr = new User[userNum];
+        String[][] allUsers = new String[userNum][userGenreRatings];
+        File users = new File("./lib/users.txt");
+        try {
+            Scanner readRatings = new Scanner(users);
+            for(int x = 0; x < userNum; x++){
+                for(int y = 0; y < userGenreRatings; y++){
+                allUsers[x][y] = readRatings.nextLine();
+                    System.out.println(allUsers[x][y]);
+                }
+                User nextUser = new User(allUsers[x]);
+                userArr[x] = nextUser;
+            }
+        
+        } catch (FileNotFoundException e) {
+           System.out.print("Error with users file");
+            e.printStackTrace();
+        }
+        return userArr;
     }
 
-
+    public static void dotProduct(Movie[] m, User[] u){
+        //takes userArr and movieArr, does
+        for (int i = 0; i < u.length; i++){
+            for (int j = 0; j < m.length; j++){
+                double movieScore = u[i].getActionScore() * m[j].getActionScore() + u[i].getComedyScore() * m[j].getComedyScore() + u[i].getDramaScore() * m[j].getDramaScore() + u[i].getRomanceScore() * m[j].getRomanceScore() + u[i].getMysteryScore() * m[j].getMysteryScore() + u[i].getHorrorScore() * m[j].getHorrorScore() + u[i].getSciFiScore() * m[j].getSciFiScore() + u[i].getDocScore() * m[j].getDocScore();
+                movieScore /= 10;
+                System.out.println(u[i].getName() + "'s score for " + m[j].getTitle() + " is " + movieScore);
+            }
+        }
+    }
+    public static Rating[] createRatingList(){
+        int userNum = 5;
+        int userRatings = 15;
+        Rating[] ratingArr = new Rating[userNum];
+        String[][] allRatings = new String[userNum][userRatings];
+        File ratings = new File("./lib/userRatings.txt");
+        try {
+            Scanner readScores = new Scanner(ratings);
+            for(int a = 0; a < userNum; a++){
+                for(int b = 0; b < userRatings; b++){
+                    allRatings[a][b] = readScores.nextLine();
+                    System.out.println(allRatings[a][b]);
+                }
+                Rating nextRating = new Rating(allRatings[a]);
+                ratingArr[a] = nextRating;
+            }
+        } catch (FileNotFoundException e) {
+            System.out.print("Error with ratings file");
+            e.printStackTrace();
+        }
+        return ratingArr;
+    }
 }
