@@ -267,11 +267,9 @@ public class Recommender {
     public static void dotProduct(Movie[] m, User[] u){
         //takes userArr and movieArr, does
         for (int i = 0; i < u.length; i++){
-            for (int j = 0; j < m.length; j++){
-                double movieScore = u[i].getActionScore() * m[j].getActionScore() + u[i].getComedyScore() * m[j].getComedyScore() + u[i].getDramaScore() * m[j].getDramaScore() + u[i].getRomanceScore() * m[j].getRomanceScore() + u[i].getMysteryScore() * m[j].getMysteryScore() + u[i].getHorrorScore() * m[j].getHorrorScore() + u[i].getSciFiScore() * m[j].getSciFiScore() + u[i].getDocScore() * m[j].getDocScore();
-                movieScore /= 10;
-                System.out.println(u[i].getName() + "'s score for " + m[j].getTitle() + " is " + movieScore);
-            }
+            double movieScore = u[i].getActionScore() * m[i].getActionScore() + u[i].getComedyScore() * m[i].getComedyScore() + u[i].getDramaScore() * m[i].getDramaScore() + u[i].getRomanceScore() * m[i].getRomanceScore() + u[i].getMysteryScore() * m[i].getMysteryScore() + u[i].getHorrorScore() * m[i].getHorrorScore() + u[i].getSciFiScore() * m[i].getSciFiScore() + u[i].getDocScore() * m[i].getDocScore();
+            movieScore /= 10;
+            System.out.println(u[i].getName() + "'s score for " + m[i].getTitle() + " is " + movieScore);
         }
     }
     public static Rating[] createRatingList(){
