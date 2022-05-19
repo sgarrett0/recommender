@@ -70,6 +70,14 @@ public class User {
         }
     }
 
+    public ArrayList<Movie> getRecommended() {
+        return recommended;
+    }
+
+    public void clearRecommended() {
+        recommended = new ArrayList<Movie>();
+    }
+
     public void printRecommended() {
         System.out.println(recommended);
     }
