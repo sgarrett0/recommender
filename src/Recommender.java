@@ -10,7 +10,7 @@ public class Recommender {
         Rating[] watchedRatings = createRatingList();
 
         userArr = dotProduct(movieArr, userArr);
-        //recommendMovies(watchedRatings, userArr, movieArr);
+        recommendMovies(watchedRatings, userArr, movieArr);
     }
 
     /**
@@ -28,15 +28,16 @@ public class Recommender {
         String[][] allMovies = new String[movieNum][movieGenres];
         File movies = new File("./lib/movies.txt");
         try {
-            Scanner readGenres = new Scanner(movies);
-            for(int i = 0; i < movieNum; i++){
-                for(int j = 0; j < movieGenres; j++){
-                   allMovies[i][j] =  readGenres.nextLine();
-                   //System.out.println(allMovies[i][j]);
-                }
-                Movie nextMovie = new Movie(allMovies[i]);
-                movieArr[i] = nextMovie;
+            try (Scanner readGenres = new Scanner(movies)) {
+                for(int i = 0; i < movieNum; i++){
+                    for(int j = 0; j < movieGenres; j++){
+                       allMovies[i][j] =  readGenres.nextLine();
+                       //System.out.println(allMovies[i][j]);
+                    }
+                    Movie nextMovie = new Movie(allMovies[i]);
+                    movieArr[i] = nextMovie;
 
+                }
             }
         } catch (FileNotFoundException e) {
            System.out.print("Error with movies file");
@@ -62,14 +63,15 @@ public class Recommender {
         String[][] allUsers = new String[userNum][userGenreRatings];
         File users = new File("./lib/users.txt");
         try {
-            Scanner readRatings = new Scanner(users);
-            for(int x = 0; x < userNum; x++){
-                for(int y = 0; y < userGenreRatings; y++){
-                allUsers[x][y] = readRatings.nextLine();
-                    //System.out.println(allUsers[x][y]);
+            try (Scanner readRatings = new Scanner(users)) {
+                for(int x = 0; x < userNum; x++){
+                    for(int y = 0; y < userGenreRatings; y++){
+                    allUsers[x][y] = readRatings.nextLine();
+                        //System.out.println(allUsers[x][y]);
+                    }
+                    User nextUser = new User(allUsers[x]);
+                    userArr[x] = nextUser;
                 }
-                User nextUser = new User(allUsers[x]);
-                userArr[x] = nextUser;
             }
         
         } catch (FileNotFoundException e) {
@@ -78,7 +80,7 @@ public class Recommender {
         }
         return userArr;
     }
-
+    //fix: some score greater than 10.
     public static User[] dotProduct(Movie[] m, User[] u){
         for (int i = 0; i < u.length; i++){
             for (int j = 0; j < m.length; j++){
@@ -88,25 +90,27 @@ public class Recommender {
                 u[i].setRatingArray(r);
                 //System.out.println(u[i].getName() + "'s score for " + m[j].getTitle() + " is " + movieScore);
             }
-            System.out.println(u[i].getRatingArray());
+            //System.out.println(u[i].getRatingArray());
         }
         return u;
     }
     public static Rating[] createRatingList(){
-        int userNum = 10;
-        int userRatings = 5; //was 15
+        int userNum = 5;
+        int userRatings = 1;
         Rating[] ratingArr = new Rating[userNum];
         String[][] allRatings = new String[userNum][userRatings];
         File ratings = new File("./lib/userRatings.txt");
         try {
-            Scanner readScores = new Scanner(ratings);
-            for(int a = 0; a < userNum; a++){
-                for(int b = 0; b < userRatings; b++){
-                    allRatings[a][b] = readScores.nextLine();
-                    //System.out.println(allRatings[a][b]);
+            try (Scanner readScores = new Scanner(ratings)) {
+                for(int a = 0; a < userNum; a++){
+                    for(int b = 0; b < userRatings; b++){
+                        allRatings[a][b] = readScores.nextLine();
+                        //System.out.println(allRatings[a][b]);
+                    }
+                    Rating nextRating = new Rating(allRatings[a]);
+                    ratingArr[a] = nextRating;
+                    userRatings += 2;
                 }
-                Rating nextRating = new Rating(allRatings[a]);
-                ratingArr[a] = nextRating;
             }
         } catch (FileNotFoundException e) {
             System.out.print("Error with ratings file");
@@ -116,16 +120,31 @@ public class Recommender {
     }
     // if the user hasn't seen the movie and it's above the rating threshold 
     //output: prints each user as follows: "UserName's recommended movies are " + the top three movies
+    //TODO: fix output, add check for movies they've already seen
     public static void recommendMovies(Rating[] wM, User[] u, Movie[] m){
-        double ratingThreshold = 8;
+        for (Rating r : wM){
+            System.out.println(r.getTitle());
+        }
+        for (User r : u){
+            System.out.println(r.getName());
+        }
+        for (Movie r : m){
+            System.out.println(r.getTitle());
+        }
+        double ratingThreshold = 10;
         for (User currentUser : u){
             String movies = "";
             for (int i = 0; i < currentUser.getRatingArray().size(); i++){
-                if(currentUser.getRatingArray().get(i).getScore() < ratingThreshold){
-                    movies += currentUser.getRatingArray().get(i).getTitle();
+                if(currentUser.getRatingArray().get(i).getScore() > ratingThreshold){
+                    movies += ", " + currentUser.getRatingArray().get(i).getTitle() + "(" + currentUser.getRatingArray().get(i).getScore() + ")";
                 }
             }
-            System.out.println(currentUser.getName() + "'s recommended movies are " + movies);
+            if (movies.length() > 0){
+                //System.out.println(currentUser.getName() + "'s recommended movies are" + movies);
+            }
+            else{
+                //System.out.println(currentUser.getName() + " has no recommended movies.");
+            }
         }
     }
 }
