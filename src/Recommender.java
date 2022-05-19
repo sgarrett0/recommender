@@ -272,6 +272,34 @@ public class Recommender {
             System.out.println(u[i].getName() + "'s score for " + m[i].getTitle() + " is " + movieScore);
         }
     }
+
+    public static void dotProduct(User user, ArrayList<Movie> movieList) {
+        HashMap<Double, Movie> movieMap = new HashMap<Double, Movie>();
+        for (int i=0; i<movieList.size(); i++) {
+            Movie movie = movieList.get(i);
+            double movieScore = user.getActionScore() * movie.getActionScore() + user.getComedyScore() * movie.getComedyScore() + user.getDramaScore() * movie.getDramaScore() + user.getRomanceScore() * movie.getRomanceScore() + user.getMysteryScore() * movie.getMysteryScore() + user.getHorrorScore() * movie.getHorrorScore() + user.getSciFiScore() * movie.getSciFiScore() + user.getDocScore() * movie.getDocScore();
+            movieScore /= 10;
+            movieMap.put(movieScore, movie);
+        }
+        ArrayList<Double> sortedScores = bubbleSort(new ArrayList<Double>(movieMap.keySet()));
+        for (int i=0; i<5; i++) {
+            user.addToRecommended(movieMap.get(sortedScores.get(i)));
+        }
+    }
+
+    public static ArrayList<Double> bubbleSort(ArrayList<Double> movies) {
+        int n = movies.size();
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (movies.get(j) > movies.get(j+1))
+                {
+                    double temp = movies.get(j);
+                    movies.set(j, movies.get(j+1));
+                    movies.set(j+1, temp);
+                }
+        return movies;
+    }
+
     public static Rating[] createRatingList(){
         int userNum = 5;
         int userRatings = 15;
