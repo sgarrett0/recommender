@@ -22,8 +22,10 @@ public class Recommender {
         createRecommendations(userBuckets, movieBuckets);
         for(User user : userScores) {
             System.out.print(user.getName() + ": ");
-            user.printRecommended();
+            dotProduct(user);
             System.out.println("");
+            user.printRecommended();
+            System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
         }
         //createRecommendations();
     }
@@ -273,7 +275,12 @@ public class Recommender {
         }
     }
 
-    public static void dotProduct(User user, ArrayList<Movie> movieList) {
+    public static void dotProduct(User user) {
+        ArrayList<Movie> movieList = new ArrayList<Movie>();
+        for (int i=0; i<user.getRecommended().size(); i++) {
+            movieList.add(user.getRecommended().get(i));
+        }
+        user.clearRecommended();
         HashMap<Double, Movie> movieMap = new HashMap<Double, Movie>();
         for (int i=0; i<movieList.size(); i++) {
             Movie movie = movieList.get(i);
@@ -282,7 +289,7 @@ public class Recommender {
             movieMap.put(movieScore, movie);
         }
         ArrayList<Double> sortedScores = bubbleSort(new ArrayList<Double>(movieMap.keySet()));
-        for (int i=0; i<5; i++) {
+        for (int i=0; i<5 && i<sortedScores.size(); i++) {
             user.addToRecommended(movieMap.get(sortedScores.get(i)));
         }
     }
