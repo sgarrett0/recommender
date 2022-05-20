@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Recommender {
@@ -7,7 +8,7 @@ public class Recommender {
         System.out.println("Running Recommender...");
         Movie[] movieArr = createMovieList();
         User[] userArr = createUserList();
-        Rating[] watchedRatings = createRatingList();
+        ArrayList<ArrayList<Rating>> watchedRatings = createRatingList();
 
         userArr = dotProduct(movieArr, userArr);
         recommendMovies(watchedRatings, userArr, movieArr);
@@ -80,7 +81,7 @@ public class Recommender {
         }
         return userArr;
     }
-    //fix: some score greater than 10.
+    //fix normalization: some score greater than 10.
     public static User[] dotProduct(Movie[] m, User[] u){
         for (int i = 0; i < u.length; i++){
             for (int j = 0; j < m.length; j++){
@@ -94,11 +95,11 @@ public class Recommender {
         }
         return u;
     }
-    public static Rating[] createRatingList(){
+    public static ArrayList<ArrayList<Rating>> createRatingList(){
         int userNum = 5;
-        int userRatings = 1;
-        Rating[] ratingArr = new Rating[userNum];
-        String[][] allRatings = new String[userNum][userRatings];
+        int userRatings = 3;
+        ArrayList<ArrayList<Rating>> ratingArr = new ArrayList<ArrayList<Rating>>();
+        String[][] allRatings = new String[userNum][15];
         File ratings = new File("./lib/userRatings.txt");
         try {
             try (Scanner readScores = new Scanner(ratings)) {
@@ -108,7 +109,7 @@ public class Recommender {
                         //System.out.println(allRatings[a][b]);
                     }
                     Rating nextRating = new Rating(allRatings[a]);
-                    ratingArr[a] = nextRating;
+                    ratingArr.get(a).add(nextRating);
                     userRatings += 2;
                 }
             }
@@ -121,16 +122,18 @@ public class Recommender {
     // if the user hasn't seen the movie and it's above the rating threshold 
     //output: prints each user as follows: "UserName's recommended movies are " + the top three movies
     //TODO: fix output, add check for movies they've already seen
-    public static void recommendMovies(Rating[] wM, User[] u, Movie[] m){
-        for (Rating r : wM){
-            System.out.println(r.getTitle());
-        }
-        for (User r : u){
-            System.out.println(r.getName());
-        }
-        for (Movie r : m){
-            System.out.println(r.getTitle());
-        }
+    public static void recommendMovies(ArrayList<ArrayList<Rating>> wM, User[] u, Movie[] m){
+        // for (ArrayList<Rating> a : wM){
+        //     for (Rating b : a){
+        //         System.out.println(b.getTitle());
+        //     }
+        // }
+        // for (User r : u){
+        //     System.out.println(r.getName());
+        // }
+        // for (Movie r : m){
+        //     System.out.println(r.getTitle());
+        // }
         double ratingThreshold = 10;
         for (User currentUser : u){
             String movies = "";
