@@ -96,58 +96,46 @@ public class Recommender {
         return u;
     }
     public static ArrayList<ArrayList<Rating>> createRatingList(){
-        int userNum = 5;
-        int userRatings = 3;
+        // int userNum = 5;
+        // int userRatings = 3;
         ArrayList<ArrayList<Rating>> ratingArr = new ArrayList<ArrayList<Rating>>();
-        String[][] allRatings = new String[userNum][15];
-        File ratings = new File("./lib/userRatings.txt");
-        try {
-            try (Scanner readScores = new Scanner(ratings)) {
-                for(int a = 0; a < userNum; a++){
-                    for(int b = 0; b < userRatings; b++){
-                        allRatings[a][b] = readScores.nextLine();
-                        //System.out.println(allRatings[a][b]);
-                    }
-                    Rating nextRating = new Rating(allRatings[a]);
-                    ratingArr.get(a).add(nextRating);
-                    userRatings += 2;
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.print("Error with ratings file");
-            e.printStackTrace();
-        }
+        // String[][] allRatings = new String[userNum][userRatings];
+        // File ratings = new File("./lib/userRatings.txt");
+        // try {
+        //     try (Scanner readScores = new Scanner(ratings)) {
+        //         for(int a = 0; a < userNum; a++){
+        //             for(int b = 0; b < userRatings; b++){
+        //                 allRatings[a][b] = readScores.nextLine();
+        //                 //System.out.println(allRatings[a][b]);
+        //             }
+        //             Rating nextRating = new Rating(allRatings[a]);
+        //             ratingArr.get(a).add(nextRating);
+        //             userRatings += 2;
+        //         }
+        //     }
+        // } catch (FileNotFoundException e) {
+        //     System.out.print("Error with ratings file");
+        //     e.printStackTrace();
+        // }
         return ratingArr;
     }
     // if the user hasn't seen the movie and it's above the rating threshold 
     //output: prints each user as follows: "UserName's recommended movies are " + the top three movies
     //TODO: fix output, add check for movies they've already seen
     public static void recommendMovies(ArrayList<ArrayList<Rating>> wM, User[] u, Movie[] m){
-        // for (ArrayList<Rating> a : wM){
-        //     for (Rating b : a){
-        //         System.out.println(b.getTitle());
-        //     }
-        // }
-        // for (User r : u){
-        //     System.out.println(r.getName());
-        // }
-        // for (Movie r : m){
-        //     System.out.println(r.getTitle());
-        // }
-        double ratingThreshold = 10;
         for (User currentUser : u){
-            String movies = "";
-            for (int i = 0; i < currentUser.getRatingArray().size(); i++){
-                if(currentUser.getRatingArray().get(i).getScore() > ratingThreshold){
-                    movies += ", " + currentUser.getRatingArray().get(i).getTitle() + "(" + currentUser.getRatingArray().get(i).getScore() + ")";
+            int l = currentUser.getRatingArray().size()-1;
+            for (int i = 0; i < l; i++){
+                for (int j = 0; j < l-i; j = 0){
+                    if(currentUser.getRatingArray().get(i).getScore() > currentUser.getRatingArray().get(i+1).getScore()){
+                        Rating temp = currentUser.getRatingArray().get(i);
+                        currentUser.getRatingArray().set(i, currentUser.getRatingArray().get(i+1));
+                        currentUser.getRatingArray().set(i+1, temp);
+                    }
                 }
             }
-            if (movies.length() > 0){
-                //System.out.println(currentUser.getName() + "'s recommended movies are" + movies);
-            }
-            else{
-                //System.out.println(currentUser.getName() + " has no recommended movies.");
-            }
+            System.out.println(currentUser.getName() + "'s top 3 recommended movies are: " + currentUser.getRatingArray().get(0).getTitle() + currentUser.getRatingArray().get(0).getScore() + ", " + currentUser.getRatingArray().get(1).getTitle() + currentUser.getRatingArray().get(1).getScore() + ", " + currentUser.getRatingArray().get(2).getTitle() + currentUser.getRatingArray().get(2).getScore());
         }
+        System.out.println("finished recommendMovies");
     }
 }
