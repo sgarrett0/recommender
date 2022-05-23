@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class Recommender {
     public static void main(String[] args) throws Exception {
-        System.out.println("Running Recommender...");
         Movie[] movieArr = createMovieList();
         User[] userArr = createUserList();
         ArrayList<ArrayList<Rating>> watchedRatings = createRatingList();
@@ -119,15 +118,20 @@ public class Recommender {
         // }
         return ratingArr;
     }
-    // if the user hasn't seen the movie and it's above the rating threshold 
-    //output: prints each user as follows: "UserName's recommended movies are " + the top three movies
+    //Output: prints each user as follows: "UserName's recommended movies are " + the top three movies
     //TODO: fix output, add check for movies they've already seen
     public static void recommendMovies(ArrayList<ArrayList<Rating>> wM, User[] u, Movie[] m){
         for (User currentUser : u){
+            
             int l = currentUser.getRatingArray().size()-1;
             for (int i = 0; i < l; i++){
-                for (int j = 0; j < l-i; j = 0){
-                    if(currentUser.getRatingArray().get(i).getScore() > currentUser.getRatingArray().get(i+1).getScore()){
+                for (int j = 0; j < l-i; j++){
+                    System.out.print("{");
+                    for (Rating r : currentUser.getRatingArray()){
+                        System.out.print(r.getTitle()+" "+r.getScore()+" ");
+                    }
+                    System.out.println("}");
+                    if(currentUser.getRatingArray().get(i).getScore() < currentUser.getRatingArray().get(i+1).getScore()){
                         Rating temp = currentUser.getRatingArray().get(i);
                         currentUser.getRatingArray().set(i, currentUser.getRatingArray().get(i+1));
                         currentUser.getRatingArray().set(i+1, temp);
@@ -136,6 +140,6 @@ public class Recommender {
             }
             System.out.println(currentUser.getName() + "'s top 3 recommended movies are: " + currentUser.getRatingArray().get(0).getTitle() + currentUser.getRatingArray().get(0).getScore() + ", " + currentUser.getRatingArray().get(1).getTitle() + currentUser.getRatingArray().get(1).getScore() + ", " + currentUser.getRatingArray().get(2).getTitle() + currentUser.getRatingArray().get(2).getScore());
         }
-        System.out.println("finished recommendMovies");
+
     }
 }
