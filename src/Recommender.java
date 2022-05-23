@@ -190,9 +190,7 @@ public class Recommender {
         for (int i = 0; i < movieKeys.size(); i++ ) {
             if (users.containsKey(movieKeys.get(i))) {
                 ArrayList<User> userList = users.get(movieKeys.get(i));
-                System.out.println(userList.size() + " UL");
                 for (int j=0; j<userList.size(); j++) {
-                    System.out.println(j+" J");
                     User user = userList.get(j);
                     user.addToRecommended(movies.get(movieKeys.get(i)));
                 }
