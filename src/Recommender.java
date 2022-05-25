@@ -124,14 +124,14 @@ public class Recommender {
         for (User currentUser : u){
             
             int l = currentUser.getRatingArray().size();
-            for (int i = 0; i < l-1; i++){
+            for (int i = 0; i < l; i++){
                 int maxIndex = i;
                 for (int j = 0; j < l; j++){
-                    System.out.print("{");
-                    for (Rating r : currentUser.getRatingArray()){
-                        System.out.print(r.getTitle()+" "+r.getScore()+" ");
-                    }
-                    System.out.println("}");
+                    // System.out.print("{");
+                    // for (Rating r : currentUser.getRatingArray()){
+                    //     System.out.print(r.getTitle()+" "+r.getScore()+" ");
+                    // }
+                    // System.out.println("}");
                     if(currentUser.getRatingArray().get(j).getScore() < currentUser.getRatingArray().get(maxIndex).getScore()){
                         maxIndex = j;
                     }
@@ -140,6 +140,13 @@ public class Recommender {
                     currentUser.getRatingArray().set(i, temp);
                 }
             }
+
+            // System.out.print("{");
+            // for (Rating r : currentUser.getRatingArray()){
+            //     System.out.print(r.getTitle()+" "+r.getScore()+" ");
+            // }
+            // System.out.println("}");
+
             System.out.println(currentUser.getName() + "'s top 3 recommended movies are: " + currentUser.getRatingArray().get(0).getTitle() + currentUser.getRatingArray().get(0).getScore() + ", " + currentUser.getRatingArray().get(1).getTitle() + currentUser.getRatingArray().get(1).getScore() + ", " + currentUser.getRatingArray().get(2).getTitle() + currentUser.getRatingArray().get(2).getScore());
         }
 
