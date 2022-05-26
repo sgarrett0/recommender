@@ -1,62 +1,135 @@
 import java.util.ArrayList;
 
 public class User {
-private String name;
-private int userActionScore;
-private int userComedyScore;
-private int userDramaScore;
-private int userRomanceScore;
-private int userMysteryScore;
-private int userHorrorScore;
-private int userSciFiScore;
-private int userDocScore;
-private ArrayList<Rating> RatingList = new ArrayList<Rating>(); 
+    private String name;
+    private int actionScore;
+    private int comedyScore;
+    private int dramaScore;
+    private int romanceScore;
+    private int mysteryScore;
+    private int horrorScore;
+    private int sciFiScore;
+    private int docScore;
+    private int hash = 1;
+    private ArrayList<Movie> recommended;
+    private ArrayList<Movie> watchHistory;
+    private ArrayList<Rating> RatingList = new ArrayList<Rating>(); 
 
-
+    public User(String name, int actionScore, int comedyScore, int dramaScore, int romanceScore, int mysteryScore, int horrorScore, int sciFiScore, int docScore){
+        this.name = name;
+        this.actionScore = actionScore;
+        this.comedyScore = comedyScore;
+        this.dramaScore = dramaScore;
+        this.romanceScore = romanceScore;
+        this.mysteryScore = mysteryScore;
+        this.horrorScore = horrorScore;
+        this.sciFiScore = sciFiScore;
+        this.docScore = docScore;
+        this.recommended = new ArrayList<Movie>();
+        this.watchHistory = generateWatchHistory();
+    }
     public User(String[] info){
         this.name = info[0];
-        this.userActionScore = Integer.parseInt(info[1]);
-        this.userComedyScore = Integer.parseInt(info[2]);
-        this.userDramaScore = Integer.parseInt(info[3]);
-        this.userRomanceScore = Integer.parseInt(info[4]);
-        this.userMysteryScore = Integer.parseInt(info[5]);
-        this.userHorrorScore = Integer.parseInt(info[6]);
-        this.userSciFiScore = Integer.parseInt(info[7]);
-        this.userDocScore = Integer.parseInt(info[8]);
+        this.actionScore = Integer.parseInt(info[1]);
+        this.comedyScore = Integer.parseInt(info[2]);
+        this.dramaScore = Integer.parseInt(info[3]);
+        this.romanceScore = Integer.parseInt(info[4]);
+        this.horrorScore = Integer.parseInt(info[5]);
+        this.sciFiScore = Integer.parseInt(info[6]);
+        this.recommended = new ArrayList<Movie>();
+        this.watchHistory = generateWatchHistory();
     }
-    public String getName(){
-        return this.name;
+
+    public static ArrayList<Movie> generateWatchHistory() {
+        ArrayList<Movie> watchHistory = new ArrayList<Movie>();
+        for (int i=0; i<200; i++) {
+            watchHistory.add(new Movie("Movie " + (int) Math.random()*199));
+        }
+        return watchHistory;
     }
- 
-    public int getActionScore(){
-        return userActionScore;
+
+    public ArrayList<Movie> getWatchHistory() {
+        return watchHistory;
     }
- 
-    public int getComedyScore(){
-        return userComedyScore;
+
+    public void addToRecommended(Movie movie){
+        for (int i=0; i<watchHistory.size(); i++) {
+            if (watchHistory.get(i).getTitle().equals(movie.getTitle())) {
+                return;
+            }
+        }
+        recommended.add(movie);
     }
- 
-    public int getDramaScore(){
-        return userDramaScore;
+
+    public void addToRecommended(ArrayList<Movie> movieList) {
+        for (int i=0; i<movieList.size(); i++) {
+            for (int j=0; j<recommended.size(); j++) {
+                if (watchHistory.get(j).getTitle().equals(movieList.get(i).getTitle())) {
+                    return;
+                }
+            }
+            recommended.add(movieList.get(i));
+        }
     }
- 
-    public int getRomanceScore(){
-        return userRomanceScore;
+
+    public ArrayList<Movie> getRecommended() {
+        return recommended;
     }
- 
-    public int getMysteryScore(){
-        return userMysteryScore;
+
+    public void clearRecommended() {
+        recommended = new ArrayList<Movie>();
+    }
+
+    public void printRecommended() {
+        System.out.println(recommended);
+    }
+
+    @Override
+    public String toString() {
+        return "User{ name=" + name +"; hash=" + hash+"}";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getActionScore() {
+        return actionScore;
+    }
+
+    public int getComedyScore() {
+        return comedyScore;
+    }
+
+    public int getDramaScore() {
+        return dramaScore;
+    }
+
+    public int getRomanceScore() {
+        return romanceScore;
+    }
+
+    public int getMysteryScore() {
+        return mysteryScore;
+    }
+
+    public int getHash() {
+        return hash;
+    }
+
+    public void setHash(int finalDigit) {
+        this.hash = this.hash * 10 + finalDigit;
     }
     
     public int getHorrorScore(){
-        return userHorrorScore;
+        return horrorScore;
     }
  
     public int getSciFiScore(){
-        return userSciFiScore;
+        return sciFiScore;
     }
     public int getDocScore(){
-        return userDocScore;
+        return docScore;
     }
 
     public ArrayList<Rating> getRatingArray(){
@@ -66,5 +139,6 @@ private ArrayList<Rating> RatingList = new ArrayList<Rating>();
     public void setRatingArray(Rating rating ){
         this.RatingList.add(rating);  
     }
+    
     
 }
