@@ -1,8 +1,8 @@
 public class Rating {
     private String title;
-    private int score;
+    private double score;
 
-    public Rating(String title, int score){
+    public Rating(String title, double score){
         this.title = title;
         this.score = score;
     }
@@ -11,7 +11,7 @@ public class Rating {
     public String getTitle(){
         return this.title;
     }
-    public int getScore(){
+    public double getScore(){
         return score;
     }
 }
